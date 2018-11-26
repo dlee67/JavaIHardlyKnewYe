@@ -1,0 +1,3 @@
+interface QuickAndDirtyScanner{
+  String getInput();
+}
