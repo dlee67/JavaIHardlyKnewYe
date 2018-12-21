@@ -7,6 +7,9 @@ class Example{
   static GenericFunctionalInterface<String, String> checkEquals = (String varOne, String varTwo) -> {
     return varOne.equals(varTwo);
   };
+  static MoreLambda moar = (int numOne, int numTwo) -> {
+    return numOne + numTwo;
+  };
 
   public static void main(String args[]){
     MyValue myValue = new MyValue(){
@@ -25,5 +28,6 @@ class Example{
         return value;
       }
     }.add(5));
+    System.out.println(moar.addNumbers(7, 7));
   }
 }
