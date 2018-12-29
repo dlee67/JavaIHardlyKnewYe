@@ -1,9 +1,4 @@
-/*
-  From the looks of things, lock is not a mutex like in C/C++.
-  Synchronize keyword tells the only one thread to execute the block
-  at a time, nothing more.
-*/
-class SyncPrac{
+class RaceCondition{
 
   volatile static boolean done = false;
   volatile static long i = 0;
@@ -14,14 +9,11 @@ class SyncPrac{
     Thread threadTwo = new Thread(){
       public void run(){
         try{
-          synchronized (lock){
-            System.out.println("In the synchronized block of ThreadTwo.");
-            for(int counter = 0; counter < 1000000000/2; counter++){
-              i++;
-            }
-            System.out.println("Finished ThreadTwo.");
-            lock.notify();
+          System.out.println("In the synchronized block of ThreadTwo.");
+          for(int counter = 0; counter < 1000000000/2; counter++){
+            i++;
           }
+          System.out.println("Finished ThreadTwo.");
         }catch(Exception e){
           System.out.println("Something broke in Thread one");
         }
@@ -43,14 +35,11 @@ class SyncPrac{
     Thread threadOne = new Thread(){
       public void run(){
         try{
-          synchronized(lock){
-            lock.wait();
-            System.out.println("In the synchronized block of ThreadOne.");
-            for(int counter = 0; counter < 1000000000/2; counter++){
-              i++;
-            }
-            done = true;
+          System.out.println("In the synchronized block of ThreadOne.");
+          for(int counter = 0; counter < 1000000000/2; counter++){
+            i++;
           }
+          done = true;
         } catch(Exception e){
           System.out.println("Something broke in Thread two.");
         }
